@@ -8,11 +8,12 @@ abstract class Product
     protected $category;
     protected $size;
     protected $madein;
-    protected $discount; // и тем не менее оставим ее 0, так как скидка на все 10 процентов по умолчанию не частая практика.
+    protected $discount; // процент на входе
     protected $model;
     protected $brandName;
     protected $deliveryPrice;
     protected $weight;
+    protected $discountPrice = 0; // сумма в валюте после калькуляции
 
     public function __construct($model, $color, $price, $size, $category = 'other products', $madein = 'china', $discount = 0, $brandname = 'noname', $delivery = 500, $weight)
         {
@@ -27,6 +28,9 @@ abstract class Product
         $this->deliveryPrice = $delivery; // предположим что средняя цена доставки высчитана в 500 рублей, а при покупке свыше определенной суммы будет уменьшаться
         $this->brandName = $brandname;
         $this->weight = $weight;
+        
+        
+        
         }
 
     function getDeliveryPrice()
@@ -139,6 +143,27 @@ abstract class Product
         }
         }
 
+        
+        public function CalculateDiscount()
+            {
+            
+            $this->discountPrice = $price * ($discount / 100);
+        
+        if ($this->discountPrice > 300) {
+            
+            $this->deliveryPrice = 250;
+            
+        }
+            
+            return $this->discountPrice;
+            }
+            
+            public function CalculateFinalPrice()
+                {
+                
+                $finalPrice = $this->price - $this->CalculateDiscount() + $this->deliveryPrice;
+                
+                }
     }
 
 class PowerSupply extends Product
@@ -147,6 +172,8 @@ class PowerSupply extends Product
     protected $power;
     protected $formFactor;
     protected $sataCablesCount;
+    
+    
 
     function getPower()
         {
@@ -181,6 +208,23 @@ class PowerSupply extends Product
         return $this;
         }
 
+        public function CalculateFinalPrice()
+            {
+            
+            $tmp = parent::CalculateFinalPrice();
+            
+            if ($this->weight < 10) {
+                
+                return $tmp - $this->discountPrice; //отнимаем скидку по условию в блоках питания
+                
+            }
+            
+            else {
+                
+                return parent::CalculateFinalPrice();
+            }
+            
+            }
     }
 
 class SmartPhone extends Product
@@ -242,7 +286,31 @@ class SmartPhone extends Product
     class CpuCooler extends Product
         {
         
+        protected $socket;
+        protected $speed;
         
-        
+        function getSocket()
+            {
+            return $this->socket;
+            }
+
+        function getSpeed()
+            {
+            return $this->speed;
+            }
+
+        function setSocket($socket)
+            {
+            $this->socket = $socket;
+            return $this;
+            }
+
+        function setSpeed($speed)
+            {
+            $this->speed = $speed;
+            return $this;
+            }
+
+                
         
         }
