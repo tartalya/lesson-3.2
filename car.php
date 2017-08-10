@@ -1,9 +1,33 @@
 <?php
 
+interface CarInterface
+    {
+
+    public function throttle($speed);
+
+    public function __construct($color, $model);
+
+    public function getWheels();
+
+    public function setWheels($wheels);
+
+    public function getModel();
+
+    public function getSpeed();
+    }
+
+interface TankInterface extends CarInterface
+    {
+
+    function getCaterpillar();
+
+    function setCaterpillar($caterpillar);
+    }
+
+// Но по мне таки абстрактным классам интерфейсы ну нафиг не нуно
 
 
-
-abstract class Car
+abstract class Car implements CarInterface
     {
 
     public $color;
@@ -18,18 +42,18 @@ abstract class Car
         $this->model = $model;
         $this->color = $color;
         }
-        
-    function getWheels()
+
+    public function getWheels()
         {
         return $this->wheels;
         }
 
-    function setWheels($wheels)
+    public function setWheels($wheels)
         {
         $this->wheels = $wheels;
         return $this;
         }
-        
+
     public function getModel()
         {
 
@@ -52,32 +76,31 @@ abstract class Car
 
     }
 
-class AutoMobile extends Car
+class AutoMobile extends Car implements CarInterface
     {
-    
     // Полностью наследуем все методы и свойства ибо присущи все и даже без переодпределений
-    
     }
-    
-class Traktor extends Car
+
+class Traktor extends Car implements CarInterface
     {
-    
     //абсолютно так же наследуем все без изменений
-    
     }
-    
-class Tank extends Car
+
+class Tank extends Car implements TankInterface
     {
-    
+
     protected $caterpillar = 2; // Добавляем гусиницы
-    protected $wheels = 14; // Ведущих конечно меньше, но тут не суть
-    
-    // Методы не трогаем
-    
-    
+    protected $wheels = 14; // Ведущих конечно меньше, но тут не суть, переоределяем число колес
+
+    function getCaterpillar()
+        {
+        return $this->caterpillar;
+        }
+
+    function setCaterpillar($caterpillar)
+        {
+        $this->caterpillar = $caterpillar;
+        return $this;
+        }
+
     }
-    
-    
-    
-    
-    

@@ -2,6 +2,8 @@
 
 require_once 'car.php';
 require_once 'pen.php';
+require_once 'tv.php';
+require_once 'bird.php';
 require_once 'product.php';
 
 $pen = new BallPen();
@@ -23,6 +25,15 @@ echo '<br>';
 $myCar->throttle(60);
 
 echo 'Я вдавил тапку на 60 км.ч и теперь моя скорость ' . $myCar->getSpeed();
+
+
+
+$tvInBigRoom = new SmartTv();
+$tvInSmallRoom = new Tv();
+$tvInKitchen = new SmartTv();
+
+// Выключены все телевизоры, не будем с ними ничего делать ))
+
 
 
 echo '<br><br>';

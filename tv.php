@@ -1,6 +1,33 @@
 <?php
 
-class Tv
+interface TvInterface 
+    {
+    function getColor();
+    function getScreenSize();
+    function getCurrentShow();
+    function getChannel();
+    function getModel();
+    function setColor($color);
+    function setScreenSize($screenSize);
+    function setCurrentShow($currentShow);
+    function setChannel($channel);
+    function setModel($model);
+    
+    }
+
+interface SmartTvInterface extends TvInterface
+    {
+    
+    function getHaveEthernet();
+    function getHaveWifi();
+    function setHaveEthernet($haveEthernet);
+    function setHaveWifi($haveWifi);
+    
+    }
+    
+    
+    
+class Tv implements TvInterface
     {
 
     protected $color = 'black'; //в большистве случаев, так что примем за дефолт
@@ -68,7 +95,7 @@ class Tv
 
     }
     
-    class SmartTv extends Tv
+    class SmartTv extends Tv implements SmartTvInterface
         {
         
         protected $haveEthernet = true;
