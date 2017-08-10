@@ -9,7 +9,7 @@ interface BirdInterface
 
     public function fly();
 
-    public function makeSound($sound);
+    public function getSound();
     }
 
 class Bird implements BirdInterface
@@ -28,17 +28,13 @@ class Bird implements BirdInterface
     public function fly()
         {
 
-        echo 'Разгоняемся, машем крыльями и взлетаем';
-
-        return true;
+        return 'Разгоняемся, машем крыльями и взлетаем';
         }
 
-    public function makeSound($sound)
+    public function getSound()
         {
-        $this->sound = $sound;
-        echo 'издает звук ' . $this->sound;
 
-        return true;
+        return 'издает звук ' . $this->sound;
         }
 
     }
@@ -55,8 +51,7 @@ class Chicken extends Bird implements BirdInterface
         {
         // переопределим, курицы не умеет летать и тогда метод можно сделать пустым и вернуть false
 
-        echo 'Разгоняемся, машем крыльями и никак ';
-        return false;
+        return 'Разгоняемся, машем крыльями и никак ';
         }
 
     }

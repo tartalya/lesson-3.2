@@ -26,7 +26,7 @@ $myCar->throttle(60);
 
 echo 'Я вдавил тапку на 60 км.ч и теперь моя скорость ' . $myCar->getSpeed();
 
-
+echo '<br><br>';
 
 $tvInBigRoom = new SmartTv();
 $tvInSmallRoom = new Tv();
@@ -34,9 +34,16 @@ $tvInKitchen = new SmartTv();
 
 // Выключены все телевизоры, не будем с ними ничего делать ))
 
+$bird = new Bird('серая', 'Чик чирик');
 
-
+echo 'Птица '. $bird->getSound() . ' ' . $bird->fly();
 echo '<br><br>';
+
+$chicken = new Chicken('white', 'Кукареку'); 
+
+echo 'курица '. $chicken->getSound() . ' ' . $chicken->fly();
+echo '<br><br>';
+
 
 // Попробуем что ли с товарами поиграться 
 
