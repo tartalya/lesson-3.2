@@ -246,10 +246,10 @@ class PowerSupply extends Product
 class SmartPhone extends Product
     {
 
-    protected $ScreenDimension;
-    protected $ram;
-    protected $rom;
-    protected $clockSpeed;
+    private $ScreenDimension;
+    private $ram;
+    private $rom;
+    private $clockSpeed;
 
     function getScreenDimension()
         {
@@ -300,8 +300,8 @@ class SmartPhone extends Product
 class CpuCooler extends Product
     {
 
-    protected $socket;
-    protected $speed;
+    private $socket;
+    private $speed;
 
     function getSocket()
         {

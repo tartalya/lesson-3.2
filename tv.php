@@ -9,13 +9,62 @@ class Tv
     protected $channel;
     protected $model;
 
-    public function show($channel)
+    function getColor()
         {
-
-        // $this->currentShow = getChannelName($channel, time()) {} а тут можно сходить куданнибудь в интернет за программой телепередач
-        // и узнать что там сейчас показывают
-        $this->channel = $channel;
+        return $this->color;
         }
+
+    function getScreenSize()
+        {
+        return $this->screenSize;
+        }
+
+    function getCurrentShow()
+        {
+        return $this->currentShow;
+        }
+
+    function getChannel()
+        {
+        return $this->channel;
+        }
+
+    function getModel()
+        {
+        return $this->model;
+        }
+
+    function setColor($color)
+        {
+        $this->color = $color;
+        return $this;
+        }
+
+    function setScreenSize($screenSize)
+        {
+        $this->screenSize = $screenSize;
+        return $this;
+        }
+
+    function setCurrentShow($currentShow)
+        {
+        $this->currentShow = $currentShow;
+        return $this;
+        }
+
+    function setChannel($channel)
+        {
+        $this->channel = $channel;
+        return $this;
+        }
+
+    function setModel($model)
+        {
+        $this->model = $model;
+        return $this;
+        }
+
+   
 
     }
     

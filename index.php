@@ -52,3 +52,25 @@ $powerSupplyThermaltake->setPower('1500watt')
            . $powerSupplyThermaltake->getDeliveryPrice();
    echo '<br>';
 
+
+   $coolerMaster = new CpuCooler('DKM-00001-A1-GP', 'silver', 210, '50x50x50', 0.2, 'cpu cooler', 'china', 10, 'cooler master');
+   
+   $coolerMaster->setSocket('AM1')
+           ->setSpeed(4800);
+   
+   //Посмотрим на цифры в корзине в котором кулер
+   
+   echo 'Цена кулера ' . $coolerMaster->CalculateFinalPrice() . ' Скидка составила ' . $coolerMaster->getDiscountPrice() . ' Стоимость доставки '
+           . $coolerMaster->getDeliveryPrice();
+   
+   echo '<br>';
+   
+   $mySmartphone = new SmartPhone('redmi note 2', 'white', 8500, '120x70x10', 0.4, 'смартфоны', 'china', 10, 'xiaomi');
+   
+   $mySmartphone->setClockSpeed('2ггц')
+           ->setRam('2Гб')
+           ->setRom('16Гб')
+           ->setScreenDimension('5.5 дюйма');
+   
+   echo 'Цена смартфона ' . $mySmartphone->CalculateFinalPrice() . ' Скидка составила ' . $mySmartphone->getDiscountPrice() . ' Стоимость доставки '
+           . $mySmartphone->getDeliveryPrice();
