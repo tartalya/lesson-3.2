@@ -2,6 +2,7 @@
 
 require_once 'car.php';
 require_once 'pen.php';
+require_once 'product.php';
 
 $pen = new BallPen();
 $pencil = new Pencil('белого', 'Красным');
@@ -26,4 +27,28 @@ echo 'Я вдавил тапку на 60 км.ч и теперь моя скор
 
 echo '<br><br>';
 
+// Попробуем что ли с товарами поиграться 
+
+
+
+$powerSupplyHiper = new PowerSupply('M600', 'black', 3200, '100x100x50', 5,'блоки питания', 'china', 10, 'hiper');
+$powerSupplyHiper->setPower('600watt')
+        ->setSataCablesCount(6)
+        ->setFormFactor('ATX');
+
+
+
+$powerSupplyThermaltake = new PowerSupply('W0431RE', 'black', 21999, '220x150x86', 15,'блоки питания', 'china', 10, 'Thermaltake');
+$powerSupplyThermaltake->setPower('1500watt')
+        ->setSataCablesCount(16)
+        ->setFormFactor('ATX');
+
+
+    
+   echo 'Цена блока питания HIPER ' . $powerSupplyHiper->CalculateFinalPrice() . ' Скидка составила ' . $powerSupplyHiper->getDiscountPrice() . ' Стоимость доставки '
+           . $powerSupplyHiper->getDeliveryPrice();
+   echo '<br>';
+   echo 'Цена блока питания Thermaltake ' . $powerSupplyThermaltake->CalculateFinalPrice() . ' Скидка составила ' . $powerSupplyThermaltake->getDiscountPrice() . ' Стоимость доставки '
+           . $powerSupplyThermaltake->getDeliveryPrice();
+   echo '<br>';
 

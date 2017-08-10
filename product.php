@@ -3,19 +3,19 @@
 abstract class Product
     {
 
-    protected $color;
-    protected $price;
-    protected $category;
-    protected $size;
-    protected $madein;
-    protected $discount; // процент на входе
-    protected $model;
-    protected $brandName;
-    protected $deliveryPrice;
-    protected $weight;
-    protected $discountPrice = 0; // сумма в валюте после калькуляции
+    private $color;
+    private $price;
+    private $category;
+    private $size;
+    private $madein;
+    private $discount; // процент на входе
+    private $model;
+    private $brandName;
+    private $deliveryPrice;
+    private $weight;
+    private $discountPrice = 0; // сумма в валюте после калькуляции
 
-    public function __construct($model, $color, $price, $size, $category = 'other products', $madein = 'china', $discount = 0, $brandname = 'noname', $delivery = 500, $weight)
+    public function __construct($model, $color, $price, $size, $weight, $category = 'other products', $madein = 'china', $discount = 0, $brandname = 'noname', $delivery = 500)
         {
 
         $this->model = $model;
@@ -25,12 +25,31 @@ abstract class Product
         $this->size = $size;
         $this->madein = $madein;
         $this->discount = $discount;
-        $this->deliveryPrice = $delivery; // предположим что средняя цена доставки высчитана в 500 рублей, а при покупке свыше определенной суммы будет уменьшаться
+        $this->deliveryPrice = $delivery; // предположим что средняя цена доставки высчитана в 500 рублей, а при достижении скидки более 300 рублей будем менять на 250
         $this->brandName = $brandname;
         $this->weight = $weight;
-        
-        
-        
+        }
+
+    function getWeight()
+        {
+        return $this->weight;
+        }
+
+    function getDiscountPrice()
+        {
+        return $this->discountPrice;
+        }
+
+    function setWeight($weight)
+        {
+        $this->weight = $weight;
+        return $this;
+        }
+
+    function setDiscountPrice($discountPrice)
+        {
+        $this->discountPrice = intval($discountPrice); // приводим к инту, зачем нам скидки с копейками, в принципе тоже самое можно было бы сделать и для price
+        return $this;
         }
 
     function getDeliveryPrice()
@@ -137,43 +156,45 @@ abstract class Product
             echo 'Неправильная цена, вы наверно ошиблись при вводе';
             return false;
         } else {
-            $this->price = $price;  // переопределяем цену установленную при создании экземпляра
+            $this->setPrice($price);  // переопределяем цену установленную при создании экземпляра
 
             return $this;
         }
         }
 
-        
-        public function CalculateDiscount()
-            {
-            
-            $this->discountPrice = $price * ($discount / 100);
-        
-        if ($this->discountPrice > 300) {
-            
-            $this->deliveryPrice = 250;
-            
+    public function CalculateDiscount()
+        {
+
+        $this->setDiscountPrice(($this->getPrice() * $this->getDiscount()) / 100);
+
+        if ($this->getDiscountPrice() > 300) {
+
+            $this->setDeliveryPrice(250);
         }
-            
-            return $this->discountPrice;
-            }
-            
-            public function CalculateFinalPrice()
-                {
-                
-                $finalPrice = $this->price - $this->CalculateDiscount() + $this->deliveryPrice;
-                
-                }
+
+        return $this->getDiscountPrice();
+        }
+
+    public function CalculateFinalPrice()
+        {
+
+        $finalPrice = $this->getPrice() - $this->CalculateDiscount() + $this->getDeliveryPrice();
+
+        //echo $this->getPrice() . ' цена <br>';
+        //echo $this->CalculateDiscount() . ' скидка в валюте <br>';
+        //echo $this->getDeliveryPrice() . ' стоимость доставки <br>';
+
+        return $finalPrice;
+        }
+
     }
 
 class PowerSupply extends Product
     {
 
-    protected $power;
-    protected $formFactor;
-    protected $sataCablesCount;
-    
-    
+    private $power;
+    private $formFactor;
+    private $sataCablesCount;
 
     function getPower()
         {
@@ -208,23 +229,18 @@ class PowerSupply extends Product
         return $this;
         }
 
-        public function CalculateFinalPrice()
-            {
-            
-            $tmp = parent::CalculateFinalPrice();
-            
-            if ($this->weight < 10) {
-                
-                return $tmp - $this->discountPrice; //отнимаем скидку по условию в блоках питания
-                
-            }
-            
-            else {
-                
-                return parent::CalculateFinalPrice();
-            }
-            
-            }
+    public function CalculateFinalPrice()
+        {
+
+        if ($this->getWeight() < 10) {
+            $this->setDiscount(0);
+        }
+
+        $finalPrice = parent::CalculateFinalPrice();
+
+        return $finalPrice;
+        }
+
     }
 
 class SmartPhone extends Product
@@ -279,38 +295,34 @@ class SmartPhone extends Product
         return $this;
         }
 
-        
     }
 
-    
-    class CpuCooler extends Product
+class CpuCooler extends Product
+    {
+
+    protected $socket;
+    protected $speed;
+
+    function getSocket()
         {
-        
-        protected $socket;
-        protected $speed;
-        
-        function getSocket()
-            {
-            return $this->socket;
-            }
-
-        function getSpeed()
-            {
-            return $this->speed;
-            }
-
-        function setSocket($socket)
-            {
-            $this->socket = $socket;
-            return $this;
-            }
-
-        function setSpeed($speed)
-            {
-            $this->speed = $speed;
-            return $this;
-            }
-
-                
-        
+        return $this->socket;
         }
+
+    function getSpeed()
+        {
+        return $this->speed;
+        }
+
+    function setSocket($socket)
+        {
+        $this->socket = $socket;
+        return $this;
+        }
+
+    function setSpeed($speed)
+        {
+        $this->speed = $speed;
+        return $this;
+        }
+
+    }
